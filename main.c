@@ -1,16 +1,19 @@
 #include "def.h"
+#include <unistd.h>
+#include <errno.h>
 #define RES "Result: "
 
 int X, Ceilings, OneLine;
 long ple;
 long sum;
+	FILE* fp;
 
 int main(int argc, char* argv[])
 {
 	int i, j;
 	char* buf;
+	char s[10];
 	int* ar;
-	FILE* fp;
 	int_fast8_t* dned;
 
 	if(argc!=2){
@@ -36,21 +39,29 @@ int main(int argc, char* argv[])
 	rewind(fp);
 	for(i=0; i<ple; i++){
 		separ(ar+i*X, fgets(buf, 32, fp));
-		for(j=0; j<X; j++)
+		/*for(j=0; j<X; j++)
 			printf("%3d", ar[j+i*X]);
-		putchar('\n');
+		putchar('\n');*/
 	}
+	fclose(fp);
 
 	dned=(int_fast8_t*)malloc(sizeof(int_fast8_t)*Ceilings);
 	sum=0;
 
 	puts("------------");
 
+	system("rm -rf out; mkdir out");
+	chdir("out");
+	if(errno)
+		perror("chdir: out");
 	for(i=0; i<ple; i++){
-		/*for(j=0; j<X; j++)
-			printf("%3d", ar[j+i*X]);
-		putchar('\n');*/
+		sprintf(s, "%d", i);
+		fp=fopen(s, "w");
+		for(j=0; j<X; j++)
+			fprintf(fp, "%3d", ar[j+i*X]);
+		fputc('\n', fp);
 		DependOn(ar, i, dned);
+		fclose(fp);
 	}
 	printf("sum: %ld\n", sum);
 

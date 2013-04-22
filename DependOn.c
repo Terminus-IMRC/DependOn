@@ -3,6 +3,7 @@
 #define PREFIX "\t"
 
 extern long sum;
+extern FILE* fp;
 
 void DependOn(int* ar, int place, int_fast8_t* dned)
 {
@@ -20,10 +21,10 @@ void DependOn(int* ar, int place, int_fast8_t* dned)
 		for(j=0; j<X; j++)
 			if(dned[ar[j+i*X]])
 				cabricnt++;
-		/*fputs(PREFIX, stdout);
+		//fputs(PREFIX, fp);
 		for(j=0; j<X; j++)
-			printf("%3d", ar[j+i*X]);
-		putchar('\n');*/
+			fprintf(fp, "%3d", ar[j+i*X]);
+		fputc('\n', fp);
 		if(cabricnt==X%2)
 			cnt++;
 		cabricnt=0;
