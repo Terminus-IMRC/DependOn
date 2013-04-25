@@ -6,7 +6,7 @@
 int X, Ceilings, OneLine;
 long ple;
 long sum;
-	FILE* fp;
+FILE* fp;
 
 int main(int argc, char* argv[])
 {
@@ -15,6 +15,7 @@ int main(int argc, char* argv[])
 	char s[10];
 	int* ar;
 	int_fast8_t* dned;
+	FILE* ifp;
 
 	if(argc!=2){
 		fputs("Invalid the number of the argument.\n", stderr);
@@ -37,11 +38,21 @@ int main(int argc, char* argv[])
 	ar=(int*)malloc(sizeof(int)*ple*X);
 
 	rewind(fp);
+
+	system("rm -rf out; mkdir out");
+	chdir("out");
+	if(errno)
+		perror("chdir: out");
+
+	ifp=fopen("index", "w");
+	if(errno)
+		perror("fopen: index");
+
 	for(i=0; i<ple; i++){
 		separ(ar+i*X, fgets(buf, 32, fp));
-		/*for(j=0; j<X; j++)
-			printf("%3d", ar[j+i*X]);
-		putchar('\n');*/
+		for(j=0; j<X; j++)
+			fprintf(ifp, "%3d", ar[j+i*X]);
+		putc('\n', ifp);
 	}
 	fclose(fp);
 
@@ -50,10 +61,6 @@ int main(int argc, char* argv[])
 
 	puts("------------");
 
-	system("rm -rf out; mkdir out");
-	chdir("out");
-	if(errno)
-		perror("chdir: out");
 	for(i=0; i<ple; i++){
 		sprintf(s, "%d", i);
 		fp=fopen(s, "w");
