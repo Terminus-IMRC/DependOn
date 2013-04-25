@@ -22,11 +22,12 @@ void DependOn(int* ar, int place, int_fast8_t* dned)
 			if(dned[ar[j+i*X]])
 				cabricnt++;
 		//fputs(PREFIX, fp);
-		for(j=0; j<X; j++)
-			fprintf(fp, "%3d", ar[j+i*X]);
-		fputc('\n', fp);
-		if(cabricnt==X%2)
+		if(cabricnt==X%2){
 			cnt++;
+			for(j=0; j<X; j++)
+				fprintf(fp, "%3d", ar[j+i*X]);
+			fputc('\n', fp);
+		}
 		cabricnt=0;
 	}
 

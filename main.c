@@ -64,9 +64,6 @@ int main(int argc, char* argv[])
 	for(i=0; i<ple; i++){
 		sprintf(s, "%d", i);
 		fp=fopen(s, "w");
-		for(j=0; j<X; j++)
-			fprintf(fp, "%3d", ar[j+i*X]);
-		fputc('\n', fp);
 		DependOn(ar, i, dned);
 		fclose(fp);
 	}
